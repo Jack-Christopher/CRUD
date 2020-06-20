@@ -1,5 +1,4 @@
-<%@page import="modelo.Articulo"%>
-<%@page import="modeloDAO.ArticuloDAO"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -10,28 +9,23 @@
 </head>
 <body>
 	<div>
-	<%
-		ArticuloDAO dao=new ArticuloDAO();
-		int id=Integer.parseInt((String)request.getAttribute("Id_a"));
-		Articulo a=(Articulo)dao.list(id);
-		
-	%>
+	
 		<h1>Editar elemento</h1>
 		<form action="ServletControlador">
 			Codigo: <br>
-			<input type="text" name="txtCodigo" value="<%= a.getCodigo() %>"><br>
+			<input type="text" name="txtCodigo" value="<c:out value="${bean.codigo}"/>"><br>
 			Nombre: <br>
-			<input type="text" name="txtNombre" value="<%= a.getNombre() %>"><br>
+			<input type="text" name="txtNombre" value="<c:out value="${bean.nombre}"/>"><br>
 			Descripcion: <br>
-			<input type="text" name="txtDescripcion" value="<%= a.getDescripcion() %>"><br>
+			<input type="text" name="txtDescripcion" value="<c:out value="${bean.descripcion}"/>"><br>
 			Existencia: <br>
-			<input type="text" name="txtExistencia" value="<%= a.getExistencia() %>"><br>
+			<input type="text" name="txtExistencia" value="<c:out value="${bean.existencia}"/>"><br>
 			Precio: <br>
-			<input type="text" name="txtPrecio" value="<%= a.getPrecio() %>"><br><br>
+			<input type="text" name="txtPrecio" value="<c:out value="${bean.precio}"/>"><br><br>
 			
-			<input type="hidden" name="txtId" value="<%= a.getId() %>">
+			<input type="hidden" name="txtId" value="${bean.id }">
 			<input type="submit" name="accion" value="Actualizar"><br>
-			<a href="ServletControlador?accion=listar">Regresar</a>
+			<a href="ServletControlador?accion=mostrar">Regresar</a>
 		</form>
 	</div>
 

@@ -23,7 +23,7 @@
 			
 			<input type="submit" name="accion" value=Agregar><br>
 		</form>
-		<a href="ServletControlador?accion=listar">Regresar</a>
+		<a href="ServletControlador?accion=mostrar">Regresar</a>
 	</div>
 </body>
 </html>

@@ -1,8 +1,8 @@
 package controlador;
 
 import java.io.IOException;
-import java.util.List;
 
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,8 +21,11 @@ public class ServletControlador extends HttpServlet {
 	String mostrar="Vistas/mostrar.jsp";
 	String registrar="Vistas/registrar.jsp";
 	String editar="Vistas/editar.jsp";
+	String index="index.jsp";
 	Articulo art=new Articulo();
 	ArticuloDAO dao=new ArticuloDAO();
+	List<Articulo> listaArticulos= dao.mostrar();
+	
 		
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
@@ -31,7 +34,11 @@ public class ServletControlador extends HttpServlet {
 		if (action.equalsIgnoreCase("mostrar"))
 		{
 			acceso=mostrar;
-						
+			request.setAttribute("listaDA", listaArticulos);
+		}
+		else if(action.equalsIgnoreCase("index"))
+		{
+			acceso= index;
 		}
 		else if(action.equalsIgnoreCase("registrar"))
 		{
@@ -54,7 +61,6 @@ public class ServletControlador extends HttpServlet {
 		}
 		else if(action.equalsIgnoreCase("editar"))
 		{
-			request.setAttribute("Id_a", request.getParameter("id"));
 			acceso=editar;
 		}
 		else if(action.equalsIgnoreCase("Actualizar"))
@@ -75,13 +81,26 @@ public class ServletControlador extends HttpServlet {
 		}
 		else if (action.equalsIgnoreCase("eliminar"))
 		{
-			art.setId(Integer.parseInt(request.getParameter("id2")));
+			art.setId(Integer.parseInt(request.getParameter("id")));
 			dao.eliminar(art.getId());
 			acceso=mostrar;
 		}
 		
+		MyBean bean = new MyBean();
+		bean.setId(art.getId());
+		bean.setCodigo(art.getCodigo());
+		bean.setDescripcion(art.getDescripcion());
+		bean.setNombre(art.getNombre());
+		bean.setExistencia(art.getExistencia());
+		bean.setPrecio(art.getPrecio());
+		
+		
+		request.setAttribute("bean", bean);
+		
 		RequestDispatcher vista=request.getRequestDispatcher(acceso);
 		vista.forward(request, response);
+		
+		
 	}
 
 	
